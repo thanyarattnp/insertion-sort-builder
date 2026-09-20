@@ -1,0 +1,413 @@
+<!doctype html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pseudocode Builder • Insertion Sort</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"><style>
+:root{--purple:#6543cd;--ink:#202039;--line:#e3e3ed}*{box-sizing:border-box}body{margin:0;background:#f5f5fa;color:var(--ink);font:16px 'Noto Sans Thai',sans-serif}header{background:#222039;color:white;padding:22px max(20px,calc((100vw - 1250px)/2))}header p{margin:6px 0;color:#d2ccea}h1{font-size:27px;margin:0}main{max-width:1290px;margin:auto;padding:22px}h2{font-size:20px;margin:0 0 12px}p{line-height:1.7}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:white;color:var(--ink);border-radius:9px;padding:10px 14px;min-height:44px}button:hover{border-color:var(--purple);background:#f3efff}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #b49cf4;outline-offset:2px}button:disabled{opacity:.45;cursor:default}.primary{background:var(--purple);color:white;border-color:var(--purple)}.primary:hover{background:#5131b4}.toolbar,.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}.toolbar label{display:grid;gap:6px;flex:1;min-width:160px;font-size:14px}input,select,textarea{padding:10px;border:1px solid #cfcfdd;border-radius:8px;background:white;color:var(--ink);max-width:100%}.steps{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.steps button.active{background:var(--purple);color:white}.layout{display:grid;grid-template-columns:1fr 1.25fr;gap:18px}.small{font-size:14px;color:#69697e}.badge{background:#e9f6ee;color:#246642;padding:5px 10px;border-radius:20px;font-size:14px}.block{border:1px solid var(--line);border-left:4px solid #8b71db;border-radius:8px;padding:10px;margin:9px 0;background:#faf9ff;display:flex;gap:8px;align-items:center;flex-wrap:wrap;overflow-wrap:anywhere}.block.selected{outline:3px solid #e3b858}.block code{flex:1;min-width:150px;font:14px 'JetBrains Mono',monospace;white-space:pre-wrap}.block .text{flex:1}.mini{padding:4px 9px;min-height:36px;font-size:14px}.slot{width:100%;border:1px dashed #c5b9e3;background:#fbfaff;padding:5px;min-height:32px;font-size:13px;color:#74608e}.empty{padding:24px;border:2px dashed var(--line);border-radius:12px;text-align:center;color:#777}.notice{padding:14px;border-radius:10px;background:#f0edf9;white-space:pre-wrap;line-height:1.7;margin-top:14px}.ok{background:#e4f5e9}.bad{background:#fff0dd}textarea{width:100%;min-height:120px;line-height:1.7}.editor{font:15px/1.8 'JetBrains Mono',monospace;min-height:340px;tab-size:2}.array{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.cell{background:#eee9fc;color:#513a99;font:bold 22px 'JetBrains Mono',monospace;padding:12px;border-radius:10px;min-width:47px;text-align:center}pre{white-space:pre-wrap;line-height:1.8;overflow-wrap:anywhere}.hint{border-left:4px solid #e4ae37;padding-left:12px}.hide{display:none!important}footer{padding:15px;text-align:center;color:#75758b;font-size:14px}@media(max-width:800px){.layout{grid-template-columns:1fr}main{padding:12px}.panel{padding:15px}h1{font-size:23px}.block code{font-size:13px}.toolbar label{min-width:130px}}
+.slot{display:block;height:18px;min-height:18px;padding:0;border:1px dashed transparent;background:transparent;border-radius:7px;transition:background .12s,border-color .12s;cursor:default}.slot:only-child{height:110px;border-color:#ddd5ef;background:#faf8ff}.drag-active .slot{background:#f4efff;border-color:#d6c8f3}.slot.over,.slot:hover,.slot:focus-visible{background:#ddd0ff;border-color:#7955d1;box-shadow:inset 0 0 0 2px #9875e3}.block{cursor:grab}.block>.text,.block>code{touch-action:none;user-select:none}.block button,.block select{touch-action:manipulation}.block.dragging{opacity:.35}.drag-ghost{position:fixed;z-index:9999;pointer-events:none;margin:0;box-shadow:0 14px 32px #25203c35;opacity:.94}.drag-active,.drag-active *{cursor:grabbing!important}
+body{font-family:'Noto Sans Thai',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}h1,h2{font-weight:600;letter-spacing:-.3px}.steps button{font-weight:600;padding:12px 18px}.block code{font-size:16px;line-height:1.9;font-family:'JetBrains Mono','Noto Sans Thai',monospace}.block select{font-family:'JetBrains Mono','Noto Sans Thai',monospace;font-size:16px;min-height:44px;cursor:pointer;position:relative;z-index:1}.editor{font-size:16px;font-family:'JetBrains Mono','Noto Sans Thai',monospace}.block .text{font-size:17px;line-height:1.8}button,input,textarea,select{font-family:inherit}button{font-weight:500}
+.submission-bar{margin-top:16px;padding:16px;background:#f1ecff;border:1px solid #d3c4fa;border-radius:12px}.submission-bar #check{width:100%;font-size:18px;font-weight:700;min-height:54px;background:#5930bd;color:white}.submission-bar #check:disabled{background:#77718b;opacity:1}.submission-bar p{margin:8px 0 0;font-size:14px}.block{margin:5px 0;padding-top:8px;padding-bottom:8px}.slot{height:12px;min-height:12px}.block .text{font-size:16px;line-height:1.6}#reason{min-height:90px}
+
+#assessmentDialog{width:min(560px,calc(100vw - 32px));max-height:88vh;box-sizing:border-box;border:0;border-radius:24px;padding:24px;color:#241c44;background:#fff;box-shadow:0 24px 90px #20133b55;overflow:auto}
+#assessmentDialog::backdrop{background:#22153b99;backdrop-filter:blur(4px)}
+.result-art{display:block;width:150px;height:110px;margin:0 auto}#assessmentDialog h2{text-align:center;margin:8px 0 16px}#assessmentDialog .panel{border:0;padding:0;margin:0;box-shadow:none}#assessmentDialog .result-details{white-space:pre-wrap;background:#f7f4ff;padding:14px;border-radius:12px;font-size:14px;max-height:180px;overflow:auto}.result-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.result-actions button{flex:1;min-height:48px}.result-close{display:block;margin-left:auto;font-size:14px}#assessmentDialog table td:last-child{text-align:right;font-weight:700}
+
+#assessmentArea{padding:18px}.assessment-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,1fr);gap:20px;align-items:start}.assessment-grid h2{font-size:18px;margin:0 0 10px}.assessment-grid #reason{min-height:48px;height:54px;resize:vertical;margin-top:6px}.assessment-grid #testing{padding:0;margin:0;border:0;box-shadow:none}.assessment-grid #testing p{margin:8px 0;font-size:13px}.assessment-grid #testSet{width:100%}#assessmentArea .actions{margin-top:8px;gap:8px}#assessmentArea #feedback{margin-top:12px;padding:10px 12px;max-height:100px;overflow:auto}#assessmentArea #scorePanel{display:none!important}#assessmentArea .submission-bar{background:transparent;border:0;padding:0;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}#tracePanel{padding:16px}#tracePanel>summary{font-weight:700;cursor:pointer;font-size:18px}#tracePanel>summary::marker{color:#7650cc}#tracePanel[open]>summary{margin-bottom:12px}
+@media(max-width:700px){.assessment-grid{grid-template-columns:1fr;gap:14px}#assessmentArea{padding:14px}}
+
+#assessmentArea .assessment-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+#assessmentArea .assessment-result-column{min-width:0;border-left:1px solid #e5ddf2;padding-left:24px}
+#assessmentArea .assessment-result-column h2{margin:0 0 10px;font-size:18px}
+#assessmentArea .assessment-result-column #feedback{margin-top:0;max-height:180px}
+#assessmentArea .assessment-grid #testing{margin-top:16px;padding-top:14px;border-top:1px solid #e5ddf2}
+@media(max-width:700px){#assessmentArea .assessment-grid{grid-template-columns:1fr;gap:18px}#assessmentArea .assessment-result-column{border-left:0;border-top:1px solid #e5ddf2;padding-left:0;padding-top:16px}}
+
+:root{--purple:#7546ed;--ink:#242047;--line:#ddd5f4}body{background:radial-gradient(ellipse at 15% 0%,#482879 0,transparent 48%),linear-gradient(140deg,#171d40,#302454);background-attachment:fixed}header{background:linear-gradient(110deg,#42228d,#22519a);border-bottom:3px solid #b899ff}header h1{color:#fff}main>.panel,.layout>.panel{box-shadow:0 8px 25px #0d0c2726}.panel{background:#fcfbff;border-color:#dcd2f7}.primary,.steps button.active{background:linear-gradient(120deg,#7546ed,#4d63da);border-color:#7954e5;box-shadow:0 3px 0 #41268b}.primary:hover{background:#5836b3}.block{background:#f4efff;border-left-color:#9563eb}.block.selected{outline-color:#f6bc45;background:#fff6d9}.slot.over{background:#dcfff3;border-color:#169575}.badge{background:#d2f9ed;color:#09684f}.ok{background:#d6f8ec;color:#075b45}.bad{background:#fff0d7;color:#74480b}.submission-bar #check{background:linear-gradient(110deg,#7546ed,#405fd1);box-shadow:0 4px 0 #372285}.submission-bar #check:disabled{box-shadow:none}footer{color:#e1d9f5}#assessmentDialog{border:2px solid #cab7ff}#stageDialog{width:min(560px,calc(100vw - 28px));max-height:90vh;overflow:auto;border:2px solid #ae87fa;border-radius:26px;padding:26px;background:linear-gradient(160deg,#312160,#182747);color:white;box-shadow:0 25px 90px #0007}#stageDialog::backdrop{background:#100b29bb;backdrop-filter:blur(5px)}#stageDialog h2{text-align:center;color:#ffe29a}#stageDialog .stage-medal{text-align:center;font-size:58px;margin:0}#stageDialog table{width:100%;border-collapse:collapse;margin:18px 0}#stageDialog td{padding:12px 8px;border-bottom:1px solid #ffffff25}#stageDialog td:last-child{text-align:right;color:#8cf1ce;font-weight:700}#stageDialog .stage-total{text-align:center;font-size:30px;font-weight:700;color:#ffe29a}#stageDialog .stage-caption{text-align:center;color:#e1d8f6;font-size:14px}#stageContinue{background:linear-gradient(110deg,#ffe192,#f3b742);color:#352344;border:0;font-weight:700;box-shadow:0 4px 0 #9b691d}
+
+#pythonHintDialog{width:min(540px,calc(100vw - 28px));max-height:85vh;overflow:auto;border:2px solid #b79bea;border-radius:20px;padding:24px;color:#242047;background:#fcfbff}#pythonHintDialog::backdrop{background:#17112d99}#pythonHintDialog select{width:100%;margin:8px 0 12px}#pythonHintDialog pre{background:#202340;color:#e7e6ff;border-radius:12px;padding:18px;white-space:pre-wrap;font:15px/1.8 'JetBrains Mono',monospace}#pythonHintDialog label{display:block}
+</style></head><body><header><h1>〈 / 〉 Insertion Sort Builder</h1><p>Sorting Lab · คิดเป็นขั้นตอน แล้วตรวจด้วยเหตุผล</p></header><main><section class="panel"><div class="toolbar"><label>ชื่อ / รหัสสำหรับไฟล์ผลการฝึก<input id="student" placeholder="เช่น 65010001" maxlength="80"></label><label>อัลกอริทึม<select id="algo"><option value="insertion">Insertion Sort</option></select></label><label>ทิศทาง<select id="direction"><option value="asc">น้อย → มาก</option><option value="desc">มาก → น้อย</option></select></label></div><div class="steps"><button data-level="1">1 · เรียงแนวคิด</button><button data-level="2">2 · ประกอบคำสั่ง</button><button data-level="3">3 · เขียน Python</button></div><span class="badge">ฝึกด้วยตนเอง · ไม่ใช้ AI</span><p id="mission"></p><div class="actions"><button id="reset">เริ่มข้อนี้ใหม่</button><button id="export">ดาวน์โหลดผลการฝึก</button><span class="small">สลับระดับได้โดยร่างไม่หาย • กรุณาดาวน์โหลดก่อนปิดหรือรีเฟรชหน้า</span></div></section><div class="layout"><section class="panel" id="bankPanel"><h2>คลังบล็อก</h2><p class="small">ลากบล็อกไปวางบนแถบสีม่วง หรือกด “เลือก” แล้วแตะตำแหน่ง</p><div id="bank"></div></section><section class="panel"><h2 id="workTitle">พื้นที่ประกอบ</h2><p class="small" id="workHelp"></p><div id="workspace"></div><textarea id="editor" class="editor hide" aria-label="เขียน Pseudocode" spellcheck="false" placeholder="เขียนคำสั่งที่นี่..."></textarea><details id="syntax" class="hide"><summary>รูปแบบคำสั่งที่เครื่องมือนี้อ่านได้</summary><pre>FOR i ← 0 TO n - 2
+  ...
+END FOR
+WHILE j >= 0 AND A[j] > key
+  ...
+END WHILE
+IF A[j] &lt; A[minIndex] THEN
+  ...
+END IF
+minIndex ← i
+key ← A[i]
+A[j + 1] ← A[j]
+SWAP A[i], A[minIndex]
+
+ดัชนีเริ่มที่ 0 • FOR รวมค่าปลายทาง
+ใช้ &lt;- หรือ ← เพื่อกำหนดค่า • คำสั่งภาษาอังกฤษ
+รองรับตัวแปร i, j, n, key, minIndex
+ใช้ IF / WHILE / FOR ตามรูปแบบนี้
+เว้นวรรคและการเยื้องได้ โดยใช้ END ปิดบล็อก</pre></details></section></div><section class="panel"><h2>คำถามสั้น ๆ ก่อนคำนวณคะแนน</h2><label for="reason" id="reasonQuestion">ตอบคำถามของขั้นนี้</label><textarea id="reason" placeholder="เขียนเหตุผลของตนเองก่อนกดตรวจ"></textarea><div class="actions"><button class="primary" id="check">ตรวจคำตอบ</button><button id="hint">ขอคำใบ้</button><span id="counts" class="small"></span></div><div id="feedback" class="notice" role="status" aria-live="polite">ประกอบคำตอบ แล้วตอบคำถามสั้น ๆ ก่อนคำนวณคะแนน</div></section><section class="panel" id="tracePanel"><h2>ทดลองตามคำสั่งของฉัน</h2><p class="small">การทดลองจะทำตามคำสั่งที่ประกอบจริง อาจได้ผลผิดหรือหยุดพร้อมแจ้งข้อผิดพลาดได้ ไม่ใช่ภาพเฉลย</p><div class="toolbar"><label>ข้อมูลทดลอง (1–8 จำนวนเต็ม คั่นด้วยจุลภาค)<input id="data" value="7, 3, 5, 2"></label><button id="run">เตรียมการทดลอง</button><button id="next" disabled>ขั้นถัดไป →</button></div><div id="array" class="array"></div><div id="trace" class="notice">ประกอบคำสั่งในระดับ 2 หรือเขียนเองในระดับ 3 แล้วทดลอง</div></section></main><footer>Noto Sans Thai + JetBrains Mono · ฝึกได้โดยไม่เชื่อมต่อ AI · Python รันในเบราว์เซอร์ โหลดตัวรันจากอินเทอร์เน็ต • ผลการฝึกยังไม่ส่ง Google Sheets</footer><script>
+'use strict';
+const $=id=>document.getElementById(id);
+const specs={selection:{name:'Selection Sort',concept:['กำหนดตำแหน่งแรกของส่วนที่ยังไม่เรียง','สมมติให้ค่านั้นเป็นค่าที่ต้องเลือก','ค้นหาค่าที่เหมาะสมที่สุดจากส่วนที่เหลือ','สลับค่าที่เลือกกับค่าตัวแรกของส่วนที่ยังไม่เรียง','เริ่มรอบถัดไปจากตำแหน่งถัดไป ทำซ้ำจนเหลือข้อมูลที่ยังไม่เรียงเพียงหนึ่งตัว'],code:['FOR i ← 0 TO n - 2','minIndex ← {i}','FOR j ← {i + 1} TO n - 1','IF A[j] {cmp} A[minIndex] THEN','minIndex ← {j}','END IF','END FOR','SWAP A[i], A[minIndex]','END FOR'],hints:['ในแต่ละรอบ เลือกค่าที่เหมาะสมที่สุดจากส่วนที่ยังไม่เรียง','เมื่อเริ่มแต่ละรอบ กำหนด minIndex เป็น i แล้วตรวจข้อมูลในตำแหน่งถัดจาก i','สลับหลังจบลูปค้นหา j แต่ยังอยู่ในลูป i']},insertion:{name:'Insertion Sort',concept:['ถือว่าข้อมูลตัวแรกเป็นส่วนที่เรียงแล้ว','หยิบค่าถัดไปเก็บไว้ใน key','เปรียบเทียบ key กับสมาชิกทางซ้าย','เลื่อนสมาชิกที่ผิดลำดับไปทางขวา','วาง key ในช่องว่าง แล้วทำซ้ำกับค่าถัดไป'],code:['FOR i ← 1 TO n - 1','key ← A[{i}]','j ← {i - 1}','WHILE j >= 0 AND A[j] {cmp} key','A[j + 1] ← A[j]','j ← j - 1','END WHILE','A[j + 1] ← {key}','END FOR'],hints:['ส่วนทางซ้ายเรียงอยู่แล้ว ก่อนนำค่าใหม่มาแทรก','เก็บ key ก่อนเลื่อนค่า มิฉะนั้นค่าเดิมอาจสูญหาย','วาง key หลังออกจาก WHILE ที่ตำแหน่ง j + 1']},bubble:{name:'Bubble Sort',concept:['เริ่มรอบเปรียบเทียบในส่วนที่ยังไม่เรียง','เริ่มจากคู่ติดกันทางซ้าย','เปรียบเทียบและสลับคู่ที่ผิดลำดับ','เลื่อนไปเปรียบเทียบคู่ติดกันถัดไปจนจบรอบ','ลดขอบเขตท้ายหนึ่งตำแหน่ง แล้วทำรอบถัดไป'],code:['FOR i ← 0 TO n - 2','FOR j ← 0 TO {n - 2 - i}','IF A[j] {cmp} A[j + 1] THEN','SWAP A[j], A[j + 1]','END IF','END FOR','END FOR'],hints:['เปรียบเทียบเฉพาะสองค่าที่อยู่ติดกัน','เมื่อจบรอบ ส่วนท้ายที่ถูกต้องแล้วไม่ต้องตรวจซ้ำ','สลับภายใน IF และเลื่อนคู่ด้วยลูป j; รุ่นนี้ทำครบ n - 1 รอบ']}};
+let level=1,bank=[],placed=[],chosen=null,tries=0,hints=0,history=[],trace=[],cursor=0,started=new Date().toISOString();
+function spec(){
+ const algorithm=$('algo').value,ascending=$('direction').value==='asc';
+ const extreme=ascending?'น้อยที่สุด':'มากที่สุด';
+ const relation=ascending?'มากกว่า':'น้อยกว่า';
+ const concepts={
+ selection:[
+ 'เริ่มรอบที่ตัวแรกของส่วนที่ยังไม่เรียง',
+ 'ให้ค่าตัวแรกเป็นค่า'+extreme+'เบื้องต้น',
+ 'ค้นหาค่า'+extreme+'ในส่วนที่ยังไม่เรียง',
+ 'สลับค่า'+extreme+'กับค่าตัวแรกของรอบ',
+ 'เริ่มรอบใหม่ที่ตำแหน่งถัดไป ทำซ้ำจนเหลือหนึ่งตัว'],
+ insertion:[
+ 'ให้ข้อมูลตัวแรกเป็นส่วนที่เรียงแล้ว',
+ 'เก็บค่าถัดไปไว้ใน key',
+ 'เปรียบเทียบ key กับค่าทางซ้ายที่อยู่ติดกัน',
+ 'เลื่อนค่าที่'+relation+' key ไปขวา แล้วตรวจค่าทางซ้ายต่อ',
+ 'แทรก key ให้ถูกตำแหน่ง ทำซ้ำกับค่าถัดไปจนครบ'],
+ bubble:[
+ 'กำหนดขอบเขตส่วนที่ยังไม่เรียง',
+ 'เริ่มเปรียบเทียบคู่ติดกันจากด้านซ้าย',
+ 'สลับเมื่อค่าซ้าย'+relation+'ค่าขวา',
+ 'ตรวจคู่ถัดไปและสลับตามเงื่อนไขจนครบรอบ',
+ 'ลดขอบเขตขวาหนึ่งตำแหน่ง ทำซ้ำจนเหลือหนึ่งตัว']};
+ const hints={
+ selection:[
+ 'ในแต่ละรอบ ค้นหาค่า'+extreme+'จากส่วนที่ยังไม่เรียง',
+ 'เมื่อเริ่มรอบ กำหนด minIndex เป็น i แล้วใช้ j ตรวจตำแหน่งถัดจาก i'+(ascending?'':' • ในแบบฝึกนี้ใช้ชื่อ minIndex เดิม แต่เก็บตำแหน่งค่ามากที่สุด'),
+ 'สลับค่าหลังตรวจข้อมูลด้วยลูป j ครบแล้ว โดยคำสั่งสลับยังอยู่ภายในลูป i'],
+ insertion:[
+ 'ส่วนทางซ้ายเรียงแล้ว ให้นำ key ไปแทรกโดยรักษาลำดับของส่วนนี้',
+ 'เก็บค่าใน key ก่อนเลื่อนข้อมูลที่มีค่า'+relation+' key ไปทางขวา',
+ 'เมื่อออกจาก WHILE ให้วาง key ที่ตำแหน่ง j + 1 แล้วเริ่มพิจารณาข้อมูลตัวถัดไป'],
+ bubble:[
+ 'เปรียบเทียบเฉพาะข้อมูลที่อยู่ติดกัน สลับเมื่อค่าซ้าย'+relation+'ค่าขวา',
+ 'เมื่อจบรอบ ค่า'+(ascending?'มากที่สุด':'น้อยที่สุด')+'ของส่วนที่ตรวจจะอยู่ด้านขวาสุด จึงไม่ต้องเปรียบเทียบตำแหน่งนี้อีก',
+ 'วางคำสั่งสลับภายใน IF และใช้ลูป j เปรียบเทียบคู่ถัดไป • แบบฝึกนี้ทำครบ n - 1 รอบ']};
+ return {...specs[algorithm],concept:concepts[algorithm],hints:hints[algorithm]};
+}
+function cmp(){return ($('algo').value==='selection')===($('direction').value==='asc')?'<':'>'}
+function lines(){return spec().code.map(s=>s.replace('{cmp}',cmp()))}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
+function feedback(t,kind=''){ $('feedback').textContent=t;$('feedback').className='notice '+kind }
+function invalidate(){trace=[];cursor=0;$('next').disabled=true;$('array').replaceChildren();$('trace').textContent='คำตอบเปลี่ยนแล้ว กดเตรียมการทดลองใหม่';}
+function reset(){bank=shuffle((level===1?spec().concept:lines()).map((text,id)=>({id,text,values:{},indent:0})));placed=[];chosen=null;tries=0;hints=0;$('editor').value='';$('reason').value='';invalidate();render();feedback('ประกอบคำตอบ แล้วตอบคำถามสั้น ๆ ก่อนคำนวณคะแนน')}
+function choose(b){chosen=b.id;render()}
+function move(id,index){let at=placed.findIndex(b=>b.id===id),b;if(at>=0){b=placed.splice(at,1)[0];if(at<index)index--}else{at=bank.findIndex(b=>b.id===id);if(at<0)return;b=bank.splice(at,1)[0]}placed.splice(index,0,b);chosen=null;invalidate();render()}
+function clearDrop(){document.querySelectorAll('.slot.over').forEach(s=>s.classList.remove('over'))}
+function dropAt(x,y){clearDrop();const target=document.elementFromPoint(x,y)?.closest('.slot');if(target)target.classList.add('over');return target}
+function slot(index){const s=node('button','','slot');s.dataset.index=index;s.setAttribute('aria-label','วางบล็อกที่ตำแหน่ง '+(index+1));s.onclick=()=>{if(chosen!==null)move(chosen,index)};s.ondragover=e=>{e.preventDefault();clearDrop();s.classList.add('over')};s.ondragleave=()=>s.classList.remove('over');s.ondrop=e=>{e.preventDefault();clearDrop();const raw=e.dataTransfer.getData('text/plain');if(raw!==''&&Number.isInteger(Number(raw)))move(Number(raw),index)};return s}
+function enableDrag(el,id){let drag=null;el.draggable=false;el.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('button,select,input'))return;drag={x:e.clientX,y:e.clientY,pointer:e.pointerId,active:false,ghost:null};el.setPointerCapture(e.pointerId)});el.addEventListener('pointermove',e=>{if(!drag||drag.pointer!==e.pointerId)return;if(!drag.active&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<7)return;if(!drag.active){drag.active=true;el.classList.add('dragging');document.body.classList.add('drag-active');drag.ghost=el.cloneNode(true);drag.ghost.className='block drag-ghost';drag.ghost.style.width=Math.min(el.offsetWidth,window.innerWidth-24)+'px';drag.ghost.querySelectorAll('button').forEach(b=>b.remove());drag.ghost.setAttribute('aria-hidden','true');document.body.append(drag.ghost)}drag.ghost.style.left=Math.max(8,Math.min(e.clientX-30,window.innerWidth-drag.ghost.offsetWidth-8))+'px';drag.ghost.style.top=(e.clientY+18)+'px';if(e.clientY<80)window.scrollBy(0,-18);if(e.clientY>window.innerHeight-80)window.scrollBy(0,18);dropAt(e.clientX,e.clientY)});function finish(e,cancel){if(!drag)return;const target=drag.active&&!cancel?dropAt(e.clientX,e.clientY):null;drag.ghost?.remove();el.classList.remove('dragging');document.body.classList.remove('drag-active');clearDrop();drag=null;if(target)move(id,Number(target.dataset.index))}el.addEventListener('pointerup',e=>finish(e,false));el.addEventListener('pointercancel',e=>finish(e,true));el.addEventListener('lostpointercapture',e=>{if(drag)finish(e,true)})}
+function block(b,inWork,index){const el=node('div',undefined,'block'+(chosen===b.id?' selected':''));enableDrag(el,b.id);const text=node(level===1?'span':'code',undefined,level===1?'text':'');if(level===1)text.textContent=b.text;else {const pieces=b.text.split(/(\{[^}]+\})/);pieces.forEach((p,k)=>{if(p.startsWith('{')){const sel=node('select');sel.addEventListener('pointerdown',e=>e.stopPropagation());sel.addEventListener('click',e=>e.stopPropagation());sel.setAttribute('aria-label','เติมคำสั่งช่อง '+(k+1));const answer=p.slice(1,-1);const options=[...new Set(['',answer,'i','j','i + 1','i - 1','key','n - 2 - i','n - 1','<','>','<=','>='])];options.forEach(v=>{const o=node('option',v||'เลือก…');o.value=v;sel.append(o)});sel.value=b.values[k]||'';sel.onchange=()=>{b.values[k]=sel.value;invalidate()};text.append(sel)}else text.append(document.createTextNode(p))})}if(inWork)el.style.paddingLeft=(10+b.indent*16)+'px';el.append(text);const pick=node('button','เลือก','mini');pick.onclick=()=>choose(b);el.append(pick);if(inWork){for(const [label,delta] of [['↑',-1],['↓',1]]){const btn=node('button',label,'mini');btn.setAttribute('aria-label',delta<0?'เลื่อนขึ้น':'เลื่อนลง');btn.disabled=index+delta<0||index+delta>=placed.length;btn.onclick=()=>{[placed[index],placed[index+delta]]=[placed[index+delta],placed[index]];invalidate();render()};el.append(btn)}if(level===2){for(const [label,d]of [['←',-1],['→',1]]){const btn=node('button',label,'mini');btn.setAttribute('aria-label','ปรับการเยื้อง');btn.onclick=()=>{b.indent=Math.max(0,Math.min(4,b.indent+d));invalidate();render()};el.append(btn)}}const back=node('button','คืน','mini');back.onclick=()=>{bank.push(placed.splice(index,1)[0]);invalidate();render()};el.append(back)}return el}
+function render(){document.querySelectorAll('[data-level]').forEach(b=>b.classList.toggle('active',Number(b.dataset.level)===level));$('mission').textContent=spec().name+' · เรียง'+($('direction').value==='asc'?'น้อยไปมาก':'มากไปน้อย')+' · ดัชนีเริ่มที่ 0';$('bankPanel').classList.toggle('hide',level===3);document.querySelector('.layout').style.gridTemplateColumns=level===3?'1fr':'';$('editor').classList.toggle('hide',level!==3);$('syntax').classList.toggle('hide',level!==3);$('workTitle').textContent=level===3?'เขียน Pseudocode ด้วยตนเอง':'พื้นที่ประกอบ';$('workHelp').textContent=level===1?'เรียงแนวคิดให้เป็นกระบวนการทำงาน':level===2?'เติมทุกช่อง ใช้ END ปิดลูปและเงื่อนไข ปุ่ม ← → จัดการเยื้องเพื่อให้อ่านง่าย':'ใช้รูปแบบคำสั่งที่รองรับด้านล่าง ระบบทดลองได้ แต่การยืนยันชื่ออัลกอริทึมและเหตุผลให้ผู้สอนตรวจ';$('bank').replaceChildren(...bank.map(b=>block(b,false)));$('workspace').replaceChildren();if(level!==3){placed.forEach((b,i)=>{$('workspace').append(slot(i),block(b,true,i))});$('workspace').append(slot(placed.length))}$('counts').textContent='ตรวจ '+tries+' ครั้ง · คำใบ้ '+hints+' ครั้ง';$('tracePanel').classList.toggle('hide',level===1)}
+function source(){if(level===3)return $('editor').value;return placed.map(b=>'  '.repeat(b.indent)+b.text.split(/(\{[^}]+\})/).map((p,k)=>p.startsWith('{')?(b.values[k]||'???'):p).join('')).join('\n')}
+// Restricted interpreter: parse a small pseudocode language. No eval or executable user JavaScript.
+function tokens(s){const a=[];let i=0;while(i<s.length){if(/\s/.test(s[i])){i++;continue}const m=s.slice(i).match(/^(>=|<=|!=|==|[A-Za-z][A-Za-z0-9]*|\d+|[+\-<>()[\]])/);if(!m)throw Error('ไม่รู้จักนิพจน์: '+s.slice(i));a.push(m[0]);i+=m[0].length}return a}
+function expression(s,env){const ts=tokens(s);let p=0;function atom(){const t=ts[p++];if(t==='-')return -atom();if(t==='('){const v=add();if(ts[p++]!==')')throw Error('วงเล็บไม่ครบ');return v}if(/^\d+$/.test(t||''))return Number(t);if(t==='A'){if(ts[p++]!=='[')throw Error('ใช้ A[index]');const i=add();if(ts[p++]!==']'||!Number.isInteger(i)||i<0||i>=env.A.length)throw Error('ดัชนีอยู่นอกขอบเขต A');return env.A[i]}if(!['i','j','n','key','minIndex'].includes(t)||env[t]===undefined)throw Error('ตัวแปรยังไม่มีค่า: '+t);return env[t]}function add(){let v=atom();while(ts[p]==='+'||ts[p]==='-'){const op=ts[p++],w=atom();v=op==='+'?v+w:v-w}return v}const v=add();if(p!==ts.length)throw Error('นิพจน์ไม่ถูกต้อง: '+s);return v}
+function condition(s,e){const parts=s.split(/\s+AND\s+/i);return parts.every(part=>{const m=part.match(/^(.+?)\s*(>=|<=|!=|==|>|<)\s*(.+)$/);if(!m)throw Error('เงื่อนไขต้องมีเครื่องหมายเปรียบเทียบ');const a=expression(m[1],e),b=expression(m[3],e);return {'>':a>b,'<':a<b,'>=':a>=b,'<=':a<=b,'==':a===b,'!=':a!==b}[m[2]]})}
+function parse(src){const root=[],stack=[{kind:'ROOT',body:root}];src.split('\n').forEach((raw,i)=>{const s=raw.trim();if(!s||s.startsWith('//'))return;let m;const item={line:i+1,text:s};if(m=s.match(/^END\s+(FOR|WHILE|IF)$/i)){if(stack.length===1||stack.at(-1).kind!==m[1].toUpperCase())throw Error('END ไม่ตรงกับบล็อกที่บรรทัด '+(i+1));stack.pop();return}if(m=s.match(/^FOR\s+(i|j)\s*(?:←|<-)\s*(.+?)\s+TO\s+(.+)$/i)){Object.assign(item,{kind:'FOR',var:m[1],from:m[2],to:m[3],body:[]})}else if(m=s.match(/^WHILE\s+(.+)$/i)){Object.assign(item,{kind:'WHILE',cond:m[1],body:[]})}else if(m=s.match(/^IF\s+(.+)\s+THEN$/i)){Object.assign(item,{kind:'IF',cond:m[1],body:[]})}else if(m=s.match(/^SWAP\s+(A\[.+?\])\s*,\s*(A\[.+?\])$/i)){Object.assign(item,{kind:'SWAP',a:m[1],b:m[2]})}else if(m=s.match(/^(A\[.+\]|i|j|key|minIndex)\s*(?:←|<-)\s*(.+)$/)){Object.assign(item,{kind:'SET',target:m[1],value:m[2]})}else throw Error('คำสั่งไม่รองรับที่บรรทัด '+(i+1)+': '+s);stack.at(-1).body.push(item);if(item.body)stack.push(item)});if(stack.length!==1)throw Error('ยังไม่มี END '+stack.at(-1).kind);return root}
+function execute(src,input){const env={A:[...input],n:input.length},events=[{A:[...input],vars:'เริ่มต้น',text:'ข้อมูลเริ่มต้น'}];let steps=0;function snap(it,note=''){if(++steps>1500)throw Error('หยุดที่ 1,500 ขั้น: ตรวจเงื่อนไขลูปและค่าตัวแปร');events.push({A:[...env.A],vars:Object.entries(env).filter(([k])=>k!=='A').map(([k,v])=>k+' = '+v).join(' · '),text:'บรรทัด '+it.line+' · '+it.text+(note?' → '+note:'')})}function idx(t){const n=expression(t.slice(2,-1),env);if(!Number.isInteger(n)||n<0||n>=env.n)throw Error('ดัชนีอยู่นอกขอบเขต: '+t);return n}function run(body){for(const it of body){if(it.kind==='SET'){const v=expression(it.value,env);if(!Number.isFinite(v))throw Error('ค่าไม่ถูกต้อง');if(it.target.startsWith('A['))env.A[idx(it.target)]=v;else env[it.target]=v;snap(it)}else if(it.kind==='SWAP'){const a=idx(it.a),b=idx(it.b);[env.A[a],env.A[b]]=[env.A[b],env.A[a]];snap(it)}else if(it.kind==='IF'){const yes=condition(it.cond,env);snap(it,String(yes));if(yes)run(it.body)}else if(it.kind==='WHILE'){while(true){const yes=condition(it.cond,env);snap(it,String(yes));if(!yes)break;run(it.body)}}else if(it.kind==='FOR'){const from=expression(it.from,env),to=expression(it.to,env);if(!Number.isInteger(from)||!Number.isInteger(to))throw Error('ขอบเขต FOR ต้องเป็นจำนวนเต็ม');for(env[it.var]=from;env[it.var]<=to;env[it.var]++){snap(it);run(it.body)}}}}try{run(parse(src));return {events,result:env.A,error:null}}catch(e){return {events,result:env.A,error:e.message}}}
+function record(kind,result){history.push({time:new Date().toISOString(),algorithm:$('algo').value,direction:$('direction').value,level,kind,attempt:tries,hints,answer:level===1?placed.map(x=>x.text):source(),reason:$('reason').value,question:reasonPrompt().question,secondQuestion:currentQuestions()[1].question,secondAnswer:$('reason2').value,activityRound,result})}
+$('check').onclick=()=>{if(!$('reason').value.trim()){feedback('เขียนเหตุผลก่อนตรวจ เพื่อบันทึกความคิดของตนเอง','bad');return}tries++;if(level===1){const good=placed.length===spec().concept.length&&placed.every((b,i)=>b.id===i);feedback(good?'ลำดับแนวคิดถูกต้องแล้ว ลองไปประกอบคำสั่งในระดับ 2':'ยังไม่ครบหรือมีขั้นที่อยู่ผิดลำดับ ลองพิจารณาว่าต้องทำอะไรก่อน–หลัง',''+(good?'ok':'bad'));record('check',{passed:good})}else{const src=source(),sets=[[7,3,5,2],[1,2,3,4],[4,3,2,1],[4,2,4,2],[9],[-1,0,-3,2]],results=sets.map(data=>{const r=execute(src,data),expected=[...data].sort((a,b)=>$('direction').value==='asc'?a-b:b-a);return {input:data,passed:!r.error&&JSON.stringify(r.result)===JSON.stringify(expected),error:r.error,result:r.result}});const passed=results.every(r=>r.passed);const canonical=lines().map(s=>s.replace(/[{}]/g,'')).join('\n').replace(/\s/g,'');const structure=src.replace(/\s/g,'')===canonical;let msg=passed?'ผ่านชุดทดสอบทั้ง 6 ชุด (ยังไม่ใช่ข้อพิสูจน์ว่าถูกทุกกรณี)':'ยังไม่ผ่านทุกชุดทดสอบ';msg+='\n'+results.map(r=>(r.passed?'✓ ':'✗ ')+'['+r.input+'] → '+(r.error||'['+r.result+']')).join('\n');msg+='\n'+(structure?'โครงสร้างตรงกับแบบฝึกของ '+spec().name:'ผลการทดสอบไม่ยืนยันชื่ออัลกอริทึม: โครงสร้างต่างจากแบบฝึก ให้ผู้สอนตรวจหลักการและเหตุผล');feedback(msg,passed?'ok':'bad');record('check',{passed,structure,tests:results})}render()};
+$('hint').onclick=()=>{hints++;feedback('คำใบ้ '+hints+': '+spec().hints[Math.min(hints-1,2)]);record('hint',null);render()};
+$('run').onclick=()=>{const raw=$('data').value.trim().split(',').map(x=>x.trim());if(raw.length>8||!raw.length||raw.some(x=>!/^[-]?\d+$/.test(x)||Math.abs(Number(x))>9999)){feedback('ใส่จำนวนเต็ม 1–8 ค่า ระหว่าง -9999 ถึง 9999 คั่นด้วยจุลภาค','bad');return}const r=execute(source(),raw.map(Number));trace=r.events;if(r.error)trace.push({...trace.at(-1),text:'หยุด: '+r.error});else trace.push({...trace.at(-1),text:'จบการทำงาน: ตรวจว่าค่าเรียงตามโจทย์และยังอยู่ครบหรือไม่'});cursor=0;showTrace();record('simulation',{input:raw.map(Number),error:r.error,result:r.result})};
+function showTrace(){const t=trace[cursor];$('array').replaceChildren(...t.A.map(v=>node('span',String(v),'cell')));$('trace').textContent='ขั้น '+cursor+' / '+(trace.length-1)+'\n'+t.text+'\n'+t.vars;$('next').disabled=cursor>=trace.length-1}
+$('next').onclick=()=>{if(cursor<trace.length-1){cursor++;showTrace()}};
+$('editor').addEventListener('input',invalidate);$('editor').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const t=e.target,s=t.selectionStart;t.setRangeText('    ',s,t.selectionEnd,'end');invalidate()}});
+const drafts=new Map();let currentKey='insertion|asc|1';
+function stashDraft(){drafts.set(currentKey,JSON.parse(JSON.stringify({bank,placed,tries,hints,editor:$('editor').value,reason:$('reason').value,feedback:$('feedback').textContent,feedbackClass:$('feedback').className})))}
+function switchExercise(nextLevel=level){stashDraft();level=nextLevel;currentKey=$('algo').value+'|'+$('direction').value+'|'+level;const saved=drafts.get(currentKey);chosen=null;invalidate();if(saved){bank=saved.bank;placed=saved.placed;tries=saved.tries;hints=saved.hints;$('editor').value=saved.editor;$('reason').value=saved.reason;render();$('feedback').textContent=saved.feedback;$('feedback').className=saved.feedbackClass}else reset()}
+$('algo').onchange=()=>switchExercise();$('direction').onchange=()=>switchExercise();document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{const next=Number(b.dataset.level);if(next!==level)switchExercise(next)});
+$('reset').onclick=()=>{record('reset',{note:'ร่างก่อนเริ่มใหม่'});drafts.delete(currentKey);reset()};
+$('export').onclick=()=>{stashDraft();const payload={drafts:Object.fromEntries(drafts),tool:'Pseudocode Builder',version:6,activityRound,roundArchive,codingStats,questionDraws:Object.fromEntries(questionDraws),secondAnswers:Object.fromEntries(secondAnswers),scoreHistory,monitoring:{events:focusEvents,note:'เหตุการณ์ออกจากหน้า ไม่ใช่ข้อสรุปการโกง; บันทึกฝั่งผู้เรียน แก้ไขได้ ไม่ใช่หลักฐานรับรองจากเซิร์ฟเวอร์'},progress:Object.fromEntries(progress),student:$('student').value,started,exported:new Date().toISOString(),note:'บันทึกการฝึก ไม่ใช่คะแนนรับรองหรือการเก็บเฉพาะครั้งแรกบนเซิร์ฟเวอร์',history,current:{algorithm:$('algo').value,direction:$('direction').value,level,answer:level===1?placed.map(b=>b.text):source(),reason:$('reason').value}};const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'})),a=node('a');a.href=url;a.download='insertion-practice-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};window.addEventListener('beforeunload',e=>{if(history.length||placed.length||$('editor').value){e.preventDefault();e.returnValue=''}});
+
+const progress=new Map();let switching=false,pyBusy=false;
+const priorRender=render,priorInvalidate=invalidate,priorSwitch=switchExercise,priorCheck=$('check').onclick;
+function baseKey(){return $('algo').value+'|'+$('direction').value}
+function passed(l){return progress.get(baseKey()+'|'+l)===true}
+function revoke(){if(switching)return;for(let l=level;l<=3;l++)progress.delete(baseKey()+'|'+l)}
+invalidate=function(){priorInvalidate();revoke();updateLocks()};
+function updateLocks(){document.querySelectorAll('[data-level]').forEach(b=>{const l=Number(b.dataset.level);b.disabled=pyBusy||(l>1&&!passed(l-1));b.textContent=(passed(l)?'✓ ':l>1&&!passed(l-1)?'🔒 ':'')+['','1 · เรียงแนวคิด','2 · ประกอบคำสั่ง','3 · เขียน Python'][l]});$('algo').disabled=pyBusy;$('direction').disabled=pyBusy;$('reset').disabled=pyBusy;$('check').disabled=pyBusy;$('editor').disabled=pyBusy;$('reason').disabled=pyBusy}
+function canonicalLines(){let depth=0;return lines().map(x=>{const text=x.replace(/[{}]/g,'');if(/^END /.test(text))depth--;const out='  '.repeat(depth)+text;if(/^(FOR|WHILE|IF) /.test(text))depth++;return out})}
+function pythonReference(){const body=canonicalLines().filter(l=>!l.trim().startsWith('END ')).map(l=>{const spaces=l.length-l.trimStart().length,t=l.trim();let code=t,m;if(m=t.match(/^FOR (\w+) ← (.+) TO (.+)$/))code=`for ${m[1]} in range(${m[2]}, ${m[3]} + 1):`;else if(t.startsWith('IF '))code='if '+t.slice(3,-5)+':';else if(t.startsWith('WHILE '))code='while '+t.slice(6).replace(' AND ',' and ')+':';else if(m=t.match(/^SWAP (.+), (.+)$/))code=`${m[1]}, ${m[2]} = ${m[2]}, ${m[1]}`;else code=t.replace(' ← ',' = ');return ' '.repeat(4+spaces*2)+code});return 'def sort_data(A):\n    n = len(A)\n'+body.join('\n')+'\n    return A'}
+const reference=node('section',undefined,'panel hide');reference.id='reference';reference.append(node('h2','Pseudocode ที่ผ่านแล้ว'),node('p','แปลงตามโครงสร้างนี้ ใช้ชื่อตัวแปรเดิม และฟังก์ชัน sort_data(A) · คืนค่า A','small'));reference.append(node('pre','',''));document.querySelector('.layout').prepend(reference);
+render=function(){priorRender();updateLocks();$('reference').classList.toggle('hide',level!==3);if(level===3){document.querySelector('.layout').style.gridTemplateColumns='';$('reference').querySelector('pre').textContent=canonicalLines().join('\n');$('workTitle').textContent='เขียน Python';$('workHelp').textContent='เยื้องระดับละ 4 ช่อง • Tab = 4 ช่อง • ใช้ตัวแปรและโครงสร้างตาม Pseudocode • ไม่ใช้ sorted() หรือ sort()';$('syntax').classList.add('hide');$('tracePanel').classList.add('hide');$('editor').setAttribute('aria-label','เขียนโปรแกรม Python');$('editor').placeholder='def sort_data(A):\n    n = len(A)\n    # เขียนส่วนเรียงลำดับที่นี่\n    return A'}$('check').textContent=level===3?'รัน Python และตรวจคำตอบ':'ตรวจคำตอบ'};
+switchExercise=function(nextLevel=level){const l=nextLevel;if(l>1&&!passed(l-1)){feedback('ต้องตรวจระดับก่อนหน้าให้ผ่านก่อน','bad');return}switching=true;try{priorSwitch(l)}finally{switching=false}render()};
+$('algo').onchange=()=>switchExercise(1);$('direction').onchange=()=>switchExercise(1);
+$('reason').addEventListener('input',()=>{revoke();updateLocks()});
+const harness=String.raw`
+import ast, json, sys
+src = submission
+
+def verify():
+    try:
+        tree=ast.parse(src)
+        for line_no,line in enumerate(src.splitlines(),1):
+            if not line.strip() or line.lstrip().startswith('#'): continue
+            if '\t' in line[:len(line)-len(line.lstrip())]:
+                return {'passed':False,'message':f'บรรทัด {line_no}: ใช้ช่องว่างแทน Tab'}
+            if (len(line)-len(line.lstrip()))%4:
+                return {'passed':False,'message':f'บรรทัด {line_no}: เยื้องระดับละ 4 ช่อง'}
+        def walk(body,depth):
+            for node in body:
+                if node.col_offset!=depth*4:
+                    raise ValueError(f'บรรทัด {node.lineno}: ควรเยื้อง {depth*4} ช่อง')
+                for field in ('body','orelse','finalbody'):
+                    child=getattr(node,field,None)
+                    if isinstance(child,list): walk(child,depth+1)
+        walk(tree.body,0)
+        def normalized(node):
+            def linear(n):
+                if isinstance(n,ast.Constant) and isinstance(n.value,int):return ({},n.value)
+                if isinstance(n,ast.Name):return ({n.id:1},0)
+                if isinstance(n,ast.BinOp) and isinstance(n.op,(ast.Add,ast.Sub)):
+                    a,c=linear(n.left); b,d=linear(n.right); sign=1 if isinstance(n.op,ast.Add) else -1
+                    out=a.copy()
+                    for k,v in b.items():out[k]=out.get(k,0)+sign*v
+                    return ({k:v for k,v in out.items() if v},c+sign*d)
+                raise ValueError()
+            if (isinstance(node,ast.BinOp) or
+                isinstance(node,ast.Name) and isinstance(node.ctx,ast.Load) or
+                isinstance(node,ast.Constant) and type(node.value) is int):
+                try:
+                    terms,c=linear(node)
+                    return ('linear',tuple(sorted(terms.items())),c)
+                except ValueError:pass
+            if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id=='range':
+                args=list(node.args)
+                if len(args)==1:args.insert(0,ast.Constant(value=0))
+                if len(args)==3 and isinstance(args[2],ast.Constant) and args[2].value==1:args=args[:2]
+                return ('range',tuple(normalized(x) for x in args))
+            if isinstance(node,ast.AST):return (type(node).__name__,tuple((k,normalized(v)) for k,v in ast.iter_fields(node)))
+            if isinstance(node,list):return tuple(normalized(x) for x in node)
+            return node
+        structure=normalized(tree)==normalized(ast.parse(reference_code))
+        allowed=(ast.Module,ast.FunctionDef,ast.arguments,ast.arg,ast.Assign,ast.AugAssign,ast.For,ast.While,ast.If,ast.Return,ast.Expr,ast.Pass,ast.Break,ast.Continue,ast.Name,ast.Load,ast.Store,ast.Constant,ast.Subscript,ast.Slice,ast.List,ast.Tuple,ast.BinOp,ast.Add,ast.Sub,ast.Mult,ast.FloorDiv,ast.Mod,ast.UnaryOp,ast.USub,ast.UAdd,ast.Not,ast.BoolOp,ast.And,ast.Or,ast.Compare,ast.Gt,ast.Lt,ast.GtE,ast.LtE,ast.Eq,ast.NotEq,ast.Call)
+        for part in ast.walk(tree):
+            if not isinstance(part,allowed):
+                return {'passed':False,'message':'แบบฝึกนี้ใช้เฉพาะตัวแปร ลิสต์ ลูป เงื่อนไข และ range/len ไม่ใช้ import, sorted, sort หรือคำสั่งอื่น','scores':[0,0,2]}
+            if isinstance(part,ast.Call) and (not isinstance(part.func,ast.Name) or part.func.id not in ('range','len')):
+                return {'passed':False,'message':'ใช้เฉพาะ range และ len ในแบบฝึกนี้ ไม่ใช้ฟังก์ชันเรียงสำเร็จรูป','scores':[0,0,2]}
+        if len(tree.body)!=1 or not isinstance(tree.body[0],ast.FunctionDef) or tree.body[0].name!='sort_data':
+            return {'passed':False,'message':'เขียนภายในฟังก์ชัน sort_data(A) หนึ่งฟังก์ชัน','scores':[0,0,2]}
+        scope={'__builtins__':{'range':range,'len':len}}
+        exec(compile(tree,'student.py','exec'),scope)
+        tests=[json.loads(selected_json),[7,3,5,2],[1,2,3,4],[4,3,2,1],[4,2,4,2],[9],[-1,0,-3,2],[],[5,5,5]]
+        reports=[]
+        passed_count=0
+        for data in tests:
+            try:
+                result=scope['sort_data'](data.copy())
+                ok=result==sorted(data,reverse=descending)
+                passed_count+=int(ok)
+                reports.append(('✓ ' if ok else '✗ ')+str(data)+' → '+str(result))
+            except Exception as error:
+                reports.append('✗ '+str(data)+' → '+str(error))
+        all_ok=passed_count==len(tests)
+        pending=all_ok and not structure
+        return {'passed':all_ok and structure,'pending':pending,'scores':[round(5*passed_count/len(tests),2),3 if structure else 0,2],'message':('ผ่านครบทุกด้าน' if all_ok and structure else 'ผ่านผลทดสอบ แต่รอผู้สอนตรวจหลักการ' if pending else 'ยังมีผลทดสอบที่ต้องแก้ไข')+'\n'+'\n'.join(reports)+('\nโครงสร้างต่างจากต้นแบบ คะแนนหลักการยังไม่รับรอง' if not structure else '')}
+    except SyntaxError as e:
+        return {'passed':False,'message':f'บรรทัด {e.lineno}: {e.msg} — ตรวจเครื่องหมาย : และการเยื้อง'}
+    except Exception as e:
+        return {'passed':False,'message':str(e)}
+json.dumps(verify(),ensure_ascii=False)
+`;
+async function checkPython(){if(!$('reason').value.trim()){feedback('เขียนเหตุผลก่อนตรวจ','bad');return}if(!passed(2)){feedback('ต้องผ่านระดับ 2 ก่อน','bad');return}tries++;pyBusy=true;updateLocks();feedback('กำลังโหลดตัวรัน Python ครั้งแรกต้องใช้อินเทอร์เน็ต…');const workerSource=`import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.mjs';self.onmessage=async(e)=>{try{const py=await loadPyodide();postMessage({ready:true});py.globals.set('submission',e.data.src);py.globals.set('reference_code',e.data.ref);py.globals.set('descending',e.data.desc);py.globals.set('selected_json',e.data.selected);const result=await py.runPythonAsync(e.data.harness);postMessage({result:JSON.parse(result)})}catch(err){postMessage({error:String(err)})}};`;let worker,url,timer;try{const result=await new Promise((resolve,reject)=>{url=URL.createObjectURL(new Blob([workerSource],{type:'text/javascript'}));worker=new Worker(url,{type:"module"});timer=setTimeout(()=>reject(Error('โหลด Python ไม่สำเร็จภายใน 60 วินาที ตรวจอินเทอร์เน็ตแล้วลองใหม่')),60000);worker.onmessage=e=>{if(e.data.ready){clearTimeout(timer);feedback('กำลังตรวจ Python…');timer=setTimeout(()=>reject(Error('หยุดการทำงานที่เกิน 8 วินาที')),8000)}else if(e.data.error)reject(Error(e.data.error));else resolve(e.data.result)};worker.onerror=()=>reject(Error('โหลดตัวรันไม่ได้ ลองเปิดไฟล์โดยตรงหรือเปิดจาก GitHub Pages ในแท็บใหม่'));worker.postMessage({src:$('editor').value,ref:pythonReference(),desc:$('direction').value==='desc',selected:JSON.stringify(testData()),harness})});if(result.passed)progress.set(baseKey()+'|3',true);else progress.delete(baseKey()+'|3');feedback(result.message,result.passed?'ok':'bad');record('python-check',result);showScore(['ผลการทดสอบ','หลักการตามต้นแบบ','การเยื้อง'],result.scores||[0,0,0],[5,3,2],result.passed,result.pending)}catch(e){feedback(e.message,'bad');showScore(['ผลการทดสอบ','หลักการตามต้นแบบ','การเยื้อง'],[0,0,0],[5,3,2],false,false,true);record('python-error',{message:e.message})}finally{clearTimeout(timer);worker?.terminate();if(url)URL.revokeObjectURL(url);pyBusy=false;render()}}
+$('check').onclick=()=>{if(!$('reason').value.trim()){feedback('เขียนเหตุผลก่อนตรวจ','bad');return}if(level===3){checkPython();return}if(level===2){const expected=canonicalLines();if(placed.length!==expected.length){feedback('วางคำสั่งให้ครบก่อนตรวจ','bad');return}const actual=source().split('\n');for(let i=0;i<actual.length;i++){if(actual[i]!==expected[i]){tries++;revoke();feedback('บรรทัด '+(i+1)+': ตรวจคำสั่ง ช่องที่เติม และการเยื้อง (ระดับละ 2 ช่อง)\nคำสั่งภายใน FOR / WHILE / IF ลึกขึ้นหนึ่งระดับ และ END ตรงกับคำสั่งเปิด','bad');record('indent-check',{passed:false,line:i+1});render();return}}}priorCheck();const last=history.at(-1);if(last?.kind==='check'&&last.result?.passed&&last.level===level){progress.set(baseKey()+'|'+level,true);feedback($('feedback').textContent+'\n✓ ผ่านระดับ '+level+' แล้ว'+(level<3?' ปลดล็อกระดับ '+(level+1):''),'ok')}updateLocks()};
+$('reset').onclick=()=>{record('reset',{note:'ร่างก่อนเริ่มใหม่'});revoke();drafts.delete(currentKey);reset()};
+$('hint').onclick=()=>{hints++;feedback(level===3?'Python: FOR รวมค่าปลายทาง จึงใช้ range(start, end + 1) • IF และ FOR ลงท้ายด้วย : • return A เยื้อง 4 ช่องภายในฟังก์ชัน':'คำใบ้: '+spec().hints[Math.min(hints-1,2)]);record('hint',null);render()};
+
+const order=['insertion'];
+const sets=[{name:'ทั่วไป: 7, 3, 5, 2',data:[7,3,5,2]},{name:'เรียงแล้ว: 1, 2, 3, 4',data:[1,2,3,4]},{name:'ย้อนลำดับ: 4, 3, 2, 1',data:[4,3,2,1]},{name:'ค่าซ้ำ: 4, 2, 4, 2',data:[4,2,4,2]},{name:'ค่าลบและศูนย์: -1, 0, -3, 2',data:[-1,0,-3,2]}];
+let focusEvents=[],monitoring=false,away=null,submitted=null;
+function testData(){return sets[Number($('testSet').value)||0].data.slice()}
+const testing=node('div',undefined,'panel hide');testing.id='testing';testing.append(node('h2','เลือกชุดข้อมูลหลังส่งคำตอบ'));const selector=node('select');selector.id='testSet';selector.setAttribute('aria-label','ชุดข้อมูลทดสอบ');sets.forEach((x,i)=>{const o=node('option',x.name);o.value=i;selector.append(o)});const testButton=node('button','ทดสอบคำตอบที่ส่ง','primary');testButton.id='testSubmitted';testing.append(selector,testButton,node('p','ระบบตรวจชุดข้อมูลที่เลือกและชุดมาตรฐานเพิ่มเติม ต้องผ่านทั้งหมดจึงปลดล็อก','small'));$('feedback').before(testing);
+const monitor=node('section',undefined,'panel');monitor.append(node('h2','ก่อนเริ่มกิจกรรม'));monitor.append(node('p','Insertion Sort มี 3 ขั้น: เรียงแนวคิด → ประกอบ pseudocode → เขียน Python กรุณากรอกชื่อ / รหัส แล้วเริ่มกิจกรรม ระบบจะแจ้งและบันทึกเมื่อหน้านี้ถูกซ่อนหรือเสียโฟกัส รวมเวลาออกและกลับ เหตุการณ์เหล่านี้ไม่ใช่ข้อสรุปว่าโกง'));const start=node('button','เริ่มกิจกรรมและบันทึกเหตุการณ์','primary');start.id='startActivity';monitor.append(start);const warning=node('p','','notice');warning.id='focusWarning';warning.setAttribute('role','status');monitor.append(warning);document.querySelector('main').prepend(monitor);
+const nextStage=node('button','ไปขั้นถัดไป →','primary');nextStage.id='nextStage';$('counts').after(nextStage);
+const oldLocks=updateLocks,oldRender=render,oldRevoke=revoke,oldInvalidate=invalidate,oldCheck=$('check').onclick;
+function unlockedAlgo(a){const at=order.indexOf(a),dir=$('direction').value;return order.slice(0,at).every(x=>[1,2,3].every(l=>progress.get(x+'|'+dir+'|'+l)))}
+updateLocks=function(){oldLocks();for(const option of $('algo').options)option.disabled=!unlockedAlgo(option.value);document.querySelectorAll('[data-level]').forEach(b=>b.disabled=b.disabled||!monitoring);$('check').disabled=pyBusy||!monitoring;$('nextStage').disabled=pyBusy||!monitoring||!passed(level);$('nextStage').textContent=level===3?(order.indexOf($('algo').value)===order.length-1?'ครบทั้ง 3 ขั้นแล้ว':'ไปด่านถัดไป →'):'ไปขั้นถัดไป →';$('testSubmitted').disabled=pyBusy||!monitoring;$('testSet').disabled=pyBusy;$('student').disabled=monitoring};
+revoke=function(){oldRevoke();if(!switching){const at=order.indexOf($('algo').value);for(const a of order.slice(at+1))for(let l=1;l<=3;l++)progress.delete(a+'|'+$('direction').value+'|'+l)}};
+invalidate=function(){oldInvalidate();if(!switching){submitted=null;testing.classList.add('hide')}};
+render=function(){oldRender();$('check').textContent='ส่งคำตอบ';updateLocks()};
+start.onclick=()=>{if(!$('student').value.trim()){warning.textContent='กรุณากรอกชื่อ / รหัสในช่องด้านล่างก่อนเริ่ม';$('student').focus();return}monitoring=true;focusEvents.push({event:'start',time:new Date().toISOString()});start.disabled=true;start.textContent='กำลังบันทึกเหตุการณ์';warning.textContent='ทำกิจกรรมในหน้านี้ และดาวน์โหลดผลส่งผู้สอนเมื่อเสร็จ';updateLocks()};
+function leave(cause){if(!monitoring||away)return;away={time:Date.now(),cause,algorithm:$('algo').value,level};focusEvents.push({event:'leave',...away,iso:new Date().toISOString()});warning.textContent='แจ้งเตือน: มีการออกจากหน้า / เสียโฟกัส ระบบบันทึกเหตุการณ์ไว้ให้ผู้สอนตรวจสอบ'}
+function returnPage(){if(!monitoring||!away||document.hidden)return;const durationMs=Date.now()-away.time;focusEvents.push({event:'return',time:new Date().toISOString(),durationMs,algorithm:away.algorithm,level:away.level,cause:away.cause});away=null;warning.textContent='กลับเข้าสู่กิจกรรมแล้ว · บันทึกออกจากหน้า '+focusEvents.filter(x=>x.event==='leave').length+' ครั้ง · ครั้งล่าสุด '+Math.round(durationMs/1000)+' วินาที (ผู้สอนพิจารณาบริบทประกอบ)'}
+document.addEventListener('visibilitychange',()=>document.hidden?leave('hidden'):returnPage());window.addEventListener('blur',()=>leave('blur'));window.addEventListener('focus',returnPage);
+$('check').onclick=()=>{if(!monitoring)return;if(!$('reason').value.trim()){feedback('เขียนเหตุผลก่อนส่ง','bad');return}record('submit',{answer:level===1?placed.map(b=>b.text):source()});if(level===1){oldCheck();return}submitted={source:source(),key:currentKey};testing.classList.remove('hide');feedback('รับร่างคำตอบแล้ว เลือกชุดข้อมูลและกดทดสอบเพื่อประเมินและปลดล็อก');};
+testButton.onclick=()=>{if(!submitted||submitted.key!==currentKey||submitted.source!==source()){feedback('คำตอบเปลี่ยนแล้ว กรุณากดส่งใหม่','bad');testing.classList.add('hide');return}if(level===3){oldCheck();return}const data=testData(),r=execute(submitted.source,data);oldCheck();feedback($('feedback').textContent+'\nชุดที่เลือก ['+data+'] → '+(r.error||'['+r.result+']'),passed(2)?'ok':'bad');record('selected-test',{input:data,result:r.result,error:r.error});$('data').value=data.join(',');};
+nextStage.onclick=()=>{if(!passed(level))return;submitted=null;testing.classList.add('hide');if(level<3)switchExercise(level+1);else{const at=order.indexOf($('algo').value);if(at<order.length-1){$('algo').value=order[at+1];switchExercise(1)}else{feedback('ผ่านครบทั้ง 3 ขั้นแล้ว กรุณาดาวน์โหลดผลการฝึกส่งผู้สอน','ok')}}};
+const stageSwitch=switchExercise;switchExercise=function(l=level){if(!unlockedAlgo($('algo').value)){feedback('ต้องผ่านด่านก่อนหน้าให้ครบ 3 ขั้น','bad');return}testing.classList.add('hide');submitted=null;stageSwitch(l)};
+$('direction').onchange=()=>{if(!unlockedAlgo($('algo').value))$('algo').value='insertion';switchExercise(1)};
+
+const scoreHistory=[];
+const scorePanel=node('section',undefined,'panel hide');scorePanel.id='scorePanel';$('feedback').after(scorePanel);
+function showScore(labels,values,maxima,pass,pending=false,unavailable=false){scorePanel.classList.remove('hide');scorePanel.replaceChildren(node('h2',unavailable?'ยังประเมินไม่ได้':pending?'ผลการตรวจ · รอผู้สอนตรวจหลักการ':'ผลการตรวจคะแนน'));const table=node('table');table.style.cssText='width:100%;border-collapse:collapse';labels.forEach((label,i)=>{const row=node('tr');const a=node('td',label),b=node('td',unavailable?'—':pending&&i===1?'รอตรวจ / '+maxima[i]:values[i]+' / '+maxima[i]);a.style.padding=b.style.padding='10px';row.append(a,b);table.append(row)});scorePanel.append(table);const total=Math.round(values.reduce((a,b)=>a+b,0)*100)/100;scorePanel.append(node('h2',unavailable?'ไม่มีคะแนน: ลองตรวจใหม่':(pending?'คะแนนที่ยืนยันแล้ว: ':'คะแนนรวม: ')+total+' / 10'));scorePanel.append(node('p',unavailable?'การโหลดหรือการรันขัดข้อง ไม่ถือว่าเป็นคะแนนศูนย์':pass?'✓ ผ่านแล้ว กดไปขั้นถัดไปได้':pending?'ยังไม่ปลดล็อก ต้องให้ผู้สอนพิจารณาหลักการเพิ่มเติม':'ยังไม่ปลดล็อก แก้จุดที่แจ้งแล้วตรวจอีกครั้ง','small'));scoreHistory.push({time:new Date().toISOString(),key:currentKey,labels,values:unavailable?null:values,total:unavailable?null:total,passed:pass,pending,unavailable});}
+const scoringRender=render;render=function(){scoringRender();$('check').textContent=level===3?'รัน Python และให้คะแนน':'ตรวจและให้คะแนน';testing.classList.toggle('hide',level===1);testButton.classList.add('hide');testing.querySelector('h2').textContent='ชุดข้อมูลสำหรับตรวจคำตอบ';};
+const scoringInvalidate=invalidate;invalidate=function(){scoringInvalidate();scorePanel.classList.add('hide');if(level>1)testing.classList.remove('hide')};
+const scoringSwitch=switchExercise;switchExercise=function(l=level){scorePanel.classList.add('hide');scoringSwitch(l)};
+function scoreBlocks(){tries++;const issues=[];let labels,values,maxima,pass=false;if(level===1){const correct=placed.filter((b,i)=>b.id===i).length;pass=correct===spec().concept.length;labels=['ลำดับแนวคิด'];values=[Math.round(correct/spec().concept.length*100)/10];maxima=[10];placed.forEach((b,i)=>{if(b.id!==i)issues.push('ตำแหน่ง '+(i+1)+': ทบทวนขั้นตอนก่อน–หลัง')});if(placed.length<spec().concept.length)issues.push('ยังวางแนวคิดไม่ครบ')}else{const expected=canonicalLines(),templates=lines(),correctOrder=placed.filter((b,i)=>b.text===templates[i]).length;let filled=0,slots=0,indents=0;lines().forEach(x=>{slots+=(x.match(/\{[^}]+\}/g)||[]).length});placed.forEach((b,i)=>{b.text.split(/(\{[^}]+\})/).forEach((t,k)=>{if(t.startsWith('{')){if(b.values[k]===t.slice(1,-1))filled++;else issues.push('บรรทัด '+(i+1)+': ตรวจช่องตัวแปรหรือขอบเขตลูป')}});const expectedLine=expected[i]||'';const expectedIndent=(expectedLine.length-expectedLine.trimStart().length)/2;if(b.indent===expectedIndent)indents++;else issues.push('บรรทัด '+(i+1)+': ควรเยื้อง '+(expectedIndent*2)+' ช่อง');if(b.text!==templates[i])issues.push('บรรทัด '+(i+1)+': ลำดับคำสั่งยังไม่ตรงขั้นตอน')});labels=['ลำดับและโครงสร้างคำสั่ง','ตัวแปรและเงื่อนไข','การเยื้อง'];maxima=[4,3,3];values=[4*correctOrder/expected.length,slots?3*filled/slots:3,3*indents/expected.length].map(v=>Math.round(v*100)/100);pass=placed.length===expected.length&&source()===expected.join('\n');if(placed.length<expected.length)issues.push('ยังวางคำสั่งไม่ครบ');const result=execute(source(),testData());issues.push('ชุดที่เลือก ['+testData()+'] → '+(result.error||'['+result.result+']'));if(pass){const tests=[[7,3,5,2],[1,2,3,4],[4,3,2,1],[4,2,4,2],[9],[-1,0,-3,2]];pass=tests.every(a=>{const r=execute(source(),a);return !r.error&&JSON.stringify(r.result)===JSON.stringify([...a].sort((a,b)=>$('direction').value==='asc'?a-b:b-a))})}}if(pass)progress.set(baseKey()+'|'+level,true);else revoke();feedback((pass?'ผ่านเงื่อนไขครบแล้ว':'ยังมีจุดที่ต้องแก้ไข')+'\n'+issues.join('\n'),pass?'ok':'bad');record('scored-check',{labels,values,passed:pass});showScore(labels,values,maxima,pass);render()}
+$('check').onclick=()=>{if(!monitoring||pyBusy)return;if(!$('reason').value.trim()){feedback('เขียนเหตุผลก่อนตรวจคะแนน','bad');return}record('submit',{answer:level===1?placed.map(b=>b.text):source()});if(level===3)checkPython();else scoreBlocks()};
+
+
+const submitBar=node('div',undefined,'submission-bar');
+const submitHelp=node('p');submitHelp.id='submitHelp';submitHelp.setAttribute('aria-live','polite');
+submitBar.append($('check'),submitHelp);$('workspace').parentElement.append(submitBar);
+const compactRender=render,compactLocks=updateLocks;
+updateLocks=function(){compactLocks();$('check').disabled=pyBusy;$('check').textContent=pyBusy?'กำลังคำนวณคะแนน…':'คำนวณคะแนน';submitHelp.textContent=!monitoring?'กรอกชื่อและตอบคำถาม แล้วกดคำนวณคะแนน ระบบจะเริ่มบันทึกการออกจากหน้าเมื่อกดปุ่ม':pyBusy?'รอสักครู่ ระบบกำลังตรวจ Python':'ตอบคำถามด้านล่าง แล้วกดคำนวณคะแนน (ยังไม่ส่ง Google Sheets)';};
+render=function(){compactRender();updateLocks()};
+const submitAction=$('check').onclick;$('check').onclick=()=>{if(pyBusy)return;if(!$('student').value.trim()){feedback('กรุณากรอกชื่อ / รหัสก่อนคำนวณคะแนน','bad');$('student').scrollIntoView({behavior:'smooth',block:'center'});$('student').focus();return}if(!$('reason').value.trim()){feedback('กรุณาตอบคำถามสั้น ๆ ก่อนคำนวณคะแนน','bad');$('reason').scrollIntoView({behavior:'smooth',block:'center'});$('reason').focus();return}if(!monitoring)start.onclick();submitAction();$('feedback').scrollIntoView({behavior:'smooth',block:'center'})};
+
+// Keep the progression action beside the result, including after asynchronous Python checks.
+const progressActions=node('div',undefined,'submission-bar');
+progressActions.append(nextStage);scorePanel.after(progressActions);
+const advanceAction=nextStage.onclick;
+nextStage.onclick=()=>{if(pyBusy||!monitoring||!passed(level))return;advanceAction();$('workTitle').scrollIntoView({behavior:'smooth',block:'start'})};
+function reasonPrompt(){
+ const asc=$('direction').value==='asc';
+ const direction=asc?'น้อยไปมาก':'มากไปน้อย';
+ const left=asc?'มากกว่า':'น้อยกว่า';
+ const prompts={
+  selection:[
+   ['ข้อมูล [7, 3, 5] เรียง'+direction+' รอบแรกเลือกค่าใดมาวางหน้าสุด?', 'ตอบเป็นตัวเลข 1 ค่า'],
+   ['ตัวแปร minIndex เก็บ “ค่า” หรือ “ตำแหน่ง” ของข้อมูลที่เลือก?', 'ตอบว่า ค่า หรือ ตำแหน่ง'],
+   ['คำสั่งสลับ A[i] กับ A[minIndex] ควรอยู่ในลูปค้นหา j หรือหลังจบลูป j?', 'ตอบว่า ในลูป j หรือ หลังจบลูป j']
+  ],
+  insertion:[
+   ['ส่วนที่เรียงแล้วคือ '+(asc?'[3, 7]':'[7, 3]')+' ถ้า key = 5 ต้องแทรกก่อน ระหว่าง หรือหลังสองค่านี้?', 'ตอบว่า ก่อน ระหว่าง หรือ หลัง'],
+   ['ขณะเรียง'+direction+' ถ้า A[j] '+left+' key ต้องเลื่อน A[j] ไปทางซ้ายหรือขวา?', 'ตอบว่า ซ้าย หรือ ขวา'],
+   ['เมื่อจบ while ต้องวาง key ที่ A[j] หรือ A[j + 1]?', 'ตอบว่า A[j] หรือ A[j + 1]']
+  ],
+  bubble:[
+   ['คู่ติดกันคือ [7, 3] ถ้าเรียง'+direction+' ต้องสลับคู่นี้หรือไม่?', 'ตอบว่า สลับ หรือ ไม่สลับ'],
+   ['ใน IF ต้องเปรียบเทียบ A[j] กับ A[j + 1] หรือ A[0]?', 'ตอบว่า A[j + 1] หรือ A[0]'],
+   ['คำสั่งสลับ A[j] กับ A[j + 1] ต้องเยื้องอยู่ภายใน if หรืออยู่นอก if?', 'ตอบว่า ภายใน if หรือ นอก if']
+  ]
+ };
+ const [question,placeholder]=prompts[$('algo').value][level-1];
+ return {question,placeholder};
+}
+const questionRender=render;
+render=function(){questionRender();const prompt=reasonPrompt();$('reasonQuestion').textContent=prompt.question;$('reason').placeholder=prompt.placeholder;$('reason').setAttribute('aria-describedby','reasonQuestion')};
+
+const resultDialog=node('dialog');resultDialog.id='assessmentDialog';resultDialog.setAttribute('aria-labelledby','resultHeading');
+const dismissResult=node('button','ปิด ×','result-close');dismissResult.setAttribute('aria-label','ปิดผลการประเมิน');
+const resultArt=node('div');
+const resultHeading=node('h2');resultHeading.id='resultHeading';
+const resultContent=node('div');
+const resultDetails=node('div',undefined,'result-details');
+const resultActions=node('div',undefined,'result-actions');
+const resultBack=node('button','กลับไปแก้ไข');
+const resultNext=node('button','ไปขั้นถัดไป →','primary');resultNext.id='resultNext';
+resultActions.append(resultBack,resultNext);resultDialog.append(dismissResult,resultArt,resultHeading,resultContent,resultDetails,resultActions);document.body.append(resultDialog);
+function closeResult(){resultDialog.close();$('check').focus({preventScroll:true})}
+dismissResult.onclick=resultBack.onclick=closeResult;
+resultDialog.addEventListener('click',e=>{if(e.target===resultDialog){const r=resultDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeResult()}});
+resultNext.onclick=()=>{if(pyBusy||!passed(level))return;resultDialog.close();nextStage.onclick()};
+const popupLocks=updateLocks;updateLocks=function(){popupLocks();resultNext.disabled=pyBusy||!passed(level);resultNext.textContent=nextStage.textContent};
+const inlineScore=showScore;
+showScore=function(labels,values,maxima,pass,pending=false,unavailable=false){
+ inlineScore(labels,values,maxima,pass,pending,unavailable);
+ resultHeading.textContent=unavailable?'ยังคำนวณคะแนนไม่ได้':pending?'รอผู้สอนตรวจเพิ่มเติม':pass?'ผ่านแล้ว เก่งมาก!':'ลองปรับอีกนิด';
+ const color=pass?'#20a887':unavailable?'#788397':'#8b65df';
+ const mark=pass?'<path d="m60 52 13 13 27-28" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>':'<path d="M62 39h36M62 51h27M62 63h20" stroke="white" stroke-width="5" stroke-linecap="round"/><path d="m90 73 17-17 7 7-17 17-11 4z" fill="#ffd56b"/>';
+ resultArt.innerHTML='<svg class="result-art" viewBox="0 0 160 110" role="img" aria-label="'+(pass?'เหรียญผ่านกิจกรรม':'บัตรคำตอบสำหรับทบทวน')+'"><ellipse cx="80" cy="99" rx="43" ry="7" fill="#ede7fa"/><circle cx="80" cy="51" r="43" fill="'+color+'"/>'+mark+'<path d="m22 23 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1zM136 65l2 5 6 1-4 4 1 6-5-3-5 3 1-6-4-4 6-1z" fill="#ffc75b"/></svg>';
+ const clone=scorePanel.cloneNode(true);clone.removeAttribute('id');clone.classList.remove('hide');resultContent.replaceChildren(clone);
+ resultDetails.textContent=$('feedback').textContent;
+ resultBack.textContent=pass?'กลับไปดูคำตอบ':unavailable?'กลับไปลองใหม่':'กลับไปแก้ไข';
+ resultNext.hidden=!pass;resultNext.disabled=pyBusy||!passed(level);resultNext.textContent=nextStage.textContent;
+ if(!resultDialog.open)resultDialog.showModal();
+};
+
+const assessmentArea=$('reason').closest('section');assessmentArea.id='assessmentArea';
+const questionColumn=node('div');
+questionColumn.append(assessmentArea.querySelector('h2'),$('reasonQuestion'),$('reason'),$('hint').parentElement);
+const assessmentGrid=node('div',undefined,'assessment-grid');assessmentGrid.append(questionColumn,testing);assessmentArea.prepend(assessmentGrid);
+const reviewResult=node('button','ดูผลคะแนนล่าสุด');reviewResult.id='reviewResult';reviewResult.hidden=true;reviewResult.onclick=()=>{if(!resultDialog.open)resultDialog.showModal()};progressActions.prepend(reviewResult);
+const compactResult=showScore;showScore=function(...args){compactResult(...args);reviewResult.hidden=false};
+const compactInvalidate=invalidate;invalidate=function(){compactInvalidate();reviewResult.hidden=true};
+const compactSwitch=switchExercise;switchExercise=function(...args){reviewResult.hidden=true;compactSwitch(...args)};
+const oldTrace=$('tracePanel');const foldedTrace=node('details');foldedTrace.id='tracePanel';foldedTrace.className=oldTrace.className;foldedTrace.append(node('summary','ทดลองตามคำสั่งของฉัน'));oldTrace.querySelector('h2').remove();while(oldTrace.firstChild)foldedTrace.append(oldTrace.firstChild);oldTrace.replaceWith(foldedTrace);
+
+questionColumn.append(testing);
+const assessmentResultColumn=node('div',undefined,'assessment-result-column');
+assessmentResultColumn.append(node('h2','ผลการประเมิน'),$('feedback'),scorePanel,progressActions);
+assessmentGrid.append(assessmentResultColumn);
+const stageDialog=node('dialog');stageDialog.id='stageDialog';stageDialog.setAttribute('aria-labelledby','stageTitle');document.body.append(stageDialog);
+const stageAdvance=nextStage.onclick;
+function openStageSummary(){
+ if(pyBusy||level!==3||![1,2,3].every(l=>passed(l)))return;
+ if(resultDialog.open)resultDialog.close();
+ const at=order.indexOf($('algo').value),last=at===order.length-1;
+ const medal=node('div',last?'🏆':'🏅','stage-medal');medal.setAttribute('aria-hidden','true');
+ const title=node('h2',last?'Insertion Sort สำเร็จครบ 3 ขั้น!':'ผ่านด่าน '+spec().name+' แล้ว');title.id='stageTitle';
+ const caption=node('p','สรุปคะแนนครั้งล่าสุดที่ผ่าน • '+($('direction').value==='asc'?'น้อย → มาก':'มาก → น้อย'),'stage-caption');
+ const table=node('table');let total=0;
+ const algorithms=last?order:[$('algo').value];
+ algorithms.forEach(a=>[1,2,3].forEach(l=>{const key=a+'|'+$('direction').value+'|'+l;const entry=[...scoreHistory].reverse().find(x=>x.key===key&&x.passed&&!x.unavailable);const value=entry?entry.total:null;if(value!==null)total+=value;const row=node('tr');row.append(node('td',(last?specs[a].name+' · ':'')+['','เรียงแนวคิด','ประกอบ pseudocode','เขียน Python'][l]),node('td',value===null?'ไม่มีบันทึกคะแนน':value+' / 10'));table.append(row)}));
+ const sum=node('div',Math.round(total*100)/100+' / '+(order.length*30)+' คะแนน','stage-total');
+ const actions=node('div',undefined,'result-actions');const back=node('button','กลับไปดูคำตอบ');back.onclick=()=>stageDialog.close();
+ const proceed=node('button',last?'ดาวน์โหลดผลการฝึก':'ไปด่าน '+specs[order[at+1]].name+' →');proceed.id='stageContinue';
+ proceed.onclick=()=>{if(pyBusy||![1,2,3].every(l=>passed(l)))return;stageDialog.close();if(last)$('export').click();else stageAdvance()};
+ actions.append(back,proceed);if(last){proceed.textContent='จบกิจกรรม';proceed.onclick=finishActivity;const restart=node('button','เริ่มใหม่อีกครั้ง');restart.id='restartActivity';restart.onclick=restartActivity;actions.append(restart)}stageDialog.replaceChildren(medal,title,caption,table,sum,actions);stageDialog.showModal();
+}
+nextStage.onclick=()=>{if(level===3)openStageSummary();else stageAdvance()};
+const stageScore=showScore;showScore=function(...args){stageScore(...args);if(level===3&&args[3])openStageSummaryAfterRun=true};
+let openStageSummaryAfterRun=false;
+const stageRender=render;render=function(){stageRender();if(openStageSummaryAfterRun&&!pyBusy){openStageSummaryAfterRun=false;openStageSummary()}};
+
+const syntaxHints={
+ function:{label:'ฟังก์ชันและการคืนค่า',code:"def function_name(parameter):\n    # statements\n    return value"},
+ for:{label:'for และ range',code:"for counter in range(start, stop):\n    # statements\n    pass"},
+ if:{label:'เงื่อนไข if',code:"if condition:\n    # statements\n    pass"},
+ while:{label:'ลูป while',code:"while condition:\n    # statements\n    pass"},
+ compare:{label:'การเปรียบเทียบและตรรกะ',code:"left < right\nleft > right\nleft <= right\nleft >= right\nleft == right\nleft != right\ncondition_one and condition_two"},
+ list:{label:'อ่านและกำหนดค่าในลิสต์',code:"value = items[position]\nitems[position] = value\nsize = len(items)"},
+ assign:{label:'กำหนดค่าและเปลี่ยนค่าตัวแปร',code:"variable = value\nvariable = variable + amount\nvariable = variable - amount"},
+ swap:{label:'สลับค่าตัวแปร',code:"left, right = right, left"},
+ indent:{label:'การเยื้องคำสั่งซ้อนกัน',code:"if condition_one:\n    if condition_two:\n        pass"}
+};
+const pythonHintDialog=node('dialog');pythonHintDialog.id='pythonHintDialog';pythonHintDialog.setAttribute('aria-labelledby','pythonHintTitle');
+const hintTitle=node('h2','คำใบ้ Syntax Python');hintTitle.id='pythonHintTitle';
+const hintTopicLabel=node('label','เลือกหัวข้อ');hintTopicLabel.htmlFor='pythonHintTopic';
+const hintTopic=node('select');hintTopic.id='pythonHintTopic';
+const hintReveal=node('button','แสดง Syntax','primary');
+const hintCode=node('pre');hintCode.id='pythonHintCode';hintCode.hidden=true;hintCode.setAttribute('aria-live','polite');
+const hintClose=node('button','ปิด');hintClose.onclick=()=>pythonHintDialog.close();
+pythonHintDialog.append(hintTitle,hintTopicLabel,hintTopic,hintReveal,hintCode,hintClose);document.body.append(pythonHintDialog);
+hintTopic.onchange=()=>{hintCode.hidden=true;hintCode.textContent=''};
+hintReveal.onclick=()=>{const topic=hintTopic.value;if(!syntaxHints[topic])return;hintCode.textContent=syntaxHints[topic].code;hintCode.hidden=false;hints++;record('syntax-hint',{topic});$('counts').textContent='ตรวจ '+tries+' ครั้ง · คำใบ้ '+hints+' ครั้ง'};
+const conceptHint=$('hint').onclick;
+$('hint').onclick=()=>{if(level!==3){conceptHint();return}hintTopic.replaceChildren();const topics=['function','for',...($('algo').value==='insertion'?['while']:['if']),'compare','list','assign',...($('algo').value!=='insertion'?['swap']:[]),'indent'];topics.forEach(key=>{const option=node('option',syntaxHints[key].label);option.value=key;hintTopic.append(option)});hintCode.hidden=true;hintCode.textContent='';pythonHintDialog.showModal()};
+const syntaxHintRender=render;render=function(){syntaxHintRender();$('hint').textContent=level===3?'ขอคำใบ้ Syntax Python':'ขอคำใบ้'};
+
+let activityEnded=false,activityRound=1,roundArchive=[],codingStats={},questionDraws=new Map(),secondAnswers=new Map();
+const originalPrompt=reasonPrompt;
+const extraQuestions={
+ selection:[['ในแต่ละรอบ เลือกจากข้อมูลที่เรียงแล้วหรือยังไม่เรียง?','ตอบว่า เรียงแล้ว หรือ ยังไม่เรียง','หลังเลือกค่าที่ต้องการ ต้องสลับกี่คู่ในรอบนั้นเมื่อจำเป็น?','ตอบเป็นจำนวนคู่'],['ลูปใดใช้ค้นหาค่าที่ต้องการ: i หรือ j?','ตอบว่า i หรือ j','หลังสลับค่าเสร็จ ต้องเริ่มรอบใหม่ที่ตำแหน่งเดิมหรือถัดไป?','ตอบว่า เดิม หรือ ถัดไป'],['ถ้าลิสต์มี 1 ค่า จำเป็นต้องสลับค่าหรือไม่?','ตอบว่า จำเป็น หรือ ไม่จำเป็น','len(A) ให้จำนวนข้อมูลหรือค่าข้อมูลตัวสุดท้าย?','ตอบว่า จำนวนข้อมูล หรือ ค่าตัวสุดท้าย']],
+ insertion:[['เริ่มต้นถือว่าส่วนที่เรียงแล้วมีกี่ตัว?','ตอบเป็นจำนวน','key ใช้เก็บค่าที่จะแทรกหรือจำนวนข้อมูลทั้งหมด?','ตอบว่า ค่าที่จะแทรก หรือ จำนวนข้อมูล'],['ระหว่างเลื่อนข้อมูล ต้องเก็บ key ไว้หรือทิ้งไป?','ตอบว่า เก็บไว้ หรือ ทิ้งไป','j ใช้ตรวจข้อมูลทางซ้ายหรือขวาของตำแหน่งเริ่มต้นของ key?','ตอบว่า ซ้าย หรือ ขวา'],['j >= 0 ช่วยป้องกันการตรวจเลยขอบด้านซ้ายหรือขวา?','ตอบว่า ซ้าย หรือ ขวา','เมื่อลูป while จบ ต้องแทรก key ก่อนเริ่มรอบถัดไปหรือไม่?','ตอบว่า ต้อง หรือ ไม่ต้อง']],
+ bubble:[['Bubble Sort เปรียบเทียบข้อมูลติดกันหรือข้ามตำแหน่ง?','ตอบว่า ติดกัน หรือ ข้ามตำแหน่ง','หลังจบรอบ ส่วนที่ยังไม่เรียงมีขนาดลดลงหรือเพิ่มขึ้น?','ตอบว่า ลดลง หรือ เพิ่มขึ้น'],['A[j + 1] อยู่ทางซ้ายหรือขวาของ A[j]?','ตอบว่า ซ้าย หรือ ขวา','จบรอบแล้ว ขอบเขตด้านขวาลดลงกี่ตำแหน่ง?','ตอบเป็นจำนวน'],['เมื่อค่าคู่ติดกันเท่ากัน เงื่อนไข > หรือ < จะให้สลับหรือไม่?','ตอบว่า สลับ หรือ ไม่สลับ','range(0, 3) ให้ค่า 3 ด้วยหรือไม่?','ตอบว่า ให้ หรือ ไม่ให้']]
+};
+function currentQuestions(){const key=baseKey()+'|'+level;if(!questionDraws.has(key)){const e=extraQuestions[$('algo').value][level-1];const pool=[originalPrompt(),{question:e[0],placeholder:e[1]},{question:e[2],placeholder:e[3]}];questionDraws.set(key,shuffle(pool).slice(0,2))}return questionDraws.get(key)}
+reasonPrompt=function(){return currentQuestions()[0]};
+const secondLabel=node('label');secondLabel.id='reasonQuestion2';secondLabel.htmlFor='reason2';
+const secondInput=node('textarea');secondInput.id='reason2';secondInput.style.cssText='min-height:48px;height:54px;margin:6px 0';
+$('reason').after(secondLabel,secondInput);
+secondInput.oninput=()=>{secondAnswers.set(baseKey()+'|'+level,secondInput.value);revoke();updateLocks()};
+const roundRender=render;render=function(){roundRender();const q=currentQuestions();$('reasonQuestion').textContent='1. '+q[0].question;secondLabel.textContent='2. '+q[1].question;secondInput.placeholder=q[1].placeholder;secondInput.value=secondAnswers.get(baseKey()+'|'+level)||'';secondInput.disabled=pyBusy};
+const roundSubmit=$('check').onclick;$('check').onclick=()=>{if(!secondInput.value.trim()){feedback('กรุณาตอบคำถามข้อ 2 ก่อนคำนวณคะแนน','bad');secondInput.scrollIntoView({block:'center'});secondInput.focus();return}roundSubmit()};
+function statsEntry(){const key=baseKey()+'|3';return codingStats[key]||(codingStats[key]={copyCount:0,pasteCount:0,pastedCharacters:0,typingEvents:0,typedCharacters:0,deleteEvents:0,syntaxRequests:0,syntaxTopics:{},events:[]})}
+function codingEvent(type,data={}){if(level!==3||pyBusy)return;const x=statsEntry();x.events.push({type,time:new Date().toISOString(),...data});return x}
+$('editor').addEventListener('copy',()=>{const x=codingEvent('copy');if(x)x.copyCount++});
+$('editor').addEventListener('paste',e=>{const length=(e.clipboardData?.getData('text/plain')||'').length;const x=codingEvent('paste',{characters:length});if(x){x.pasteCount++;x.pastedCharacters+=length}});
+$('editor').addEventListener('input',e=>{if(e.isComposing)return;const t=e.inputType||'unknown';const x=codingEvent('input',{inputType:t,characters:e.data?.length||0});if(!x)return;if(t.startsWith('delete'))x.deleteEvents++;else if(t==='insertText'||t==='insertCompositionText'||t==='insertLineBreak'){x.typingEvents++;x.typedCharacters+=e.data?.length||(t==='insertLineBreak'?1:0)}});
+$('editor').addEventListener('compositionend',e=>{const x=codingEvent('composition',{characters:e.data?.length||0});if(x){x.typingEvents++;x.typedCharacters+=e.data?.length||0}});
+$('editor').addEventListener('keydown',e=>{if(e.key==='Tab'){const x=codingEvent('indent',{characters:4});if(x){x.typingEvents++;x.typedCharacters+=4}}});
+const trackedSyntax=hintReveal.onclick;hintReveal.onclick=()=>{const x=codingEvent('syntax',{topic:hintTopic.value});if(x){x.syntaxRequests++;x.syntaxTopics[hintTopic.value]=(x.syntaxTopics[hintTopic.value]||0)+1}trackedSyntax()};
+const trackingNote=node('p','ขั้น Python บันทึกจำนวนครั้งที่คัดลอก วาง พิมพ์ และขอ Syntax เฉพาะในช่องเขียนโค้ด ไม่อ่านคลิปบอร์ดนอกการวาง และไม่ใช้สรุปว่าโกง','small');$('editor').after(trackingNote);
+const statsRender=render;render=function(){statsRender();trackingNote.classList.toggle('hide',level!==3)};
+function archiveRound(){stashDraft();roundArchive.push(JSON.parse(JSON.stringify({round:activityRound,finishedAt:new Date().toISOString(),student:$('student').value,scoreHistory,history,codingStats,focusEvents,drafts:Object.fromEntries(drafts),questions:Object.fromEntries(questionDraws),secondAnswers:Object.fromEntries(secondAnswers)})))}
+function finishActivity(){returnPage();monitoring=false;activityEnded=true;focusEvents.push({event:'finish',time:new Date().toISOString(),round:activityRound});$('export').click();stageDialog.replaceChildren(node('div','🏆','stage-medal'),node('h2','จบกิจกรรมแล้ว'),node('p','ดาวน์โหลดผลการฝึกแล้ว หากยังไม่ได้รับไฟล์ กดดาวน์โหลดอีกครั้ง'));const download=node('button','ดาวน์โหลดผลอีกครั้ง');download.onclick=()=>$('export').click();const restart=node('button','เริ่มใหม่อีกครั้ง');restart.onclick=restartActivity;stageDialog.append(download,restart);updateLocks()}
+function restartActivity(){activityEnded=false;archiveRound();$('export').click();stageDialog.close();if(resultDialog.open)resultDialog.close();activityRound++;scoreHistory.length=0;history.length=0;focusEvents=[];codingStats={};questionDraws.clear();secondAnswers.clear();drafts.clear();progress.clear();away=null;submitted=null;openStageSummaryAfterRun=false;monitoring=true;focusEvents.push({event:'start',round:activityRound,time:new Date().toISOString()});$('algo').value='insertion';level=1;currentKey=baseKey()+'|1';started=new Date().toISOString();reset();feedback('เริ่มรอบที่ '+activityRound+' แล้ว • เก็บผลรอบก่อนในไฟล์ดาวน์โหลดและประวัติรอบ')}
+
+const finishLocks=updateLocks;updateLocks=function(){finishLocks();if(activityEnded){['check','editor','reason','reason2','hint','nextStage','resultNext'].forEach(id=>$(id).disabled=true)}};
+reset();
+
+</script></body></html>
